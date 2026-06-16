@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Joshua A. Martinez — Cloud &amp; Network Engineer</title>
+<meta name="description" content="Cloud and network engineering portfolio — Azure, automation, and infrastructure. Corpus Christi, TX." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #06080F;
+    --bg-2: #0A0E1A;
+    --ink: #EAEEF7;
+    --muted: #8C96AB;
+    --faint: #565F73;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.16);
+    --glass: rgba(255,255,255,0.035);
+    --accent: #4D8DFF;
+    --accent-2: #22D3EE;
+    --accent-ink: #9CC4FF;
+    --online: #34D399;
+
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+
+    --maxw: 1120px;
+    --pad: clamp(20px, 5vw, 56px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 700px at 72% -10%, rgba(34,211,238,0.10), transparent 60%),
+      radial-gradient(1000px 800px at 12% 0%, rgba(77,141,255,0.12), transparent 55%),
+      var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--accent); color: #04060c; }
+  :focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--pad); }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; margin: 0; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+    text-transform: lowercase; color: var(--accent-2);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before { content: "//"; color: var(--faint); }
+
+  .section { padding-block: clamp(72px, 10vw, 130px); position: relative; }
+  .section + .section { border-top: 1px solid var(--line); }
+  .section-head { max-width: 640px; margin-bottom: 52px; }
+  .section-head h2 { font-size: clamp(28px, 4.2vw, 42px); margin-top: 14px; }
+  .section-head p { color: var(--muted); margin: 16px 0 0; font-size: 17px; }
+
+  /* ---------------- nav ---------------- */
+  header.nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 60; height: 64px;
+    backdrop-filter: saturate(160%) blur(14px);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+  .brand { font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: 0.02em; }
+  .brand .br { font-family: var(--mono); font-weight: 500; color: var(--accent-2); }
+  .nav-links { display: flex; gap: 26px; align-items: center; }
+  .nav-links a { font-size: 14px; color: var(--muted); font-weight: 500; transition: color .18s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { font-family: var(--mono); font-size: 13px; border: 1px solid var(--line-strong); padding: 7px 15px; border-radius: 999px; }
+  .nav-cta:hover { border-color: var(--accent-2); color: var(--accent-2); background: rgba(34,211,238,0.06); }
+  @media (max-width: 720px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* ---------------- hero / 3d ---------------- */
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; }
+  #scene { position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; }
+  .hero-fade { position: absolute; inset: auto 0 0 0; height: 38%; z-index: 1; pointer-events: none;
+    background: linear-gradient(to bottom, transparent, var(--bg) 92%); }
+  .hero-content { position: relative; z-index: 2; padding-top: 64px; pointer-events: none; }
+  .hero .hero-content { margin-left: 0; margin-right: auto; }
+  .hero-content > * { pointer-events: auto; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono); font-size: 13px; color: var(--muted);
+    border: 1px solid var(--line); background: var(--glass);
+    padding: 7px 14px; border-radius: 999px; margin-bottom: 26px;
+    backdrop-filter: blur(6px);
+  }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--online); box-shadow: 0 0 0 0 rgba(52,211,153,0.6); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.5); } 70% { box-shadow: 0 0 0 9px rgba(52,211,153,0); } 100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); } }
+  @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
+
+  .hero h1 { font-size: clamp(40px, 8.4vw, 84px); font-weight: 600; letter-spacing: -0.035em; margin-bottom: 22px; }
+  .hero h1 .grad { background: linear-gradient(100deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero h1 .cyan { color: var(--accent-2); text-shadow: 0 0 8px rgba(34,211,238,0.65), 0 0 22px rgba(34,211,238,0.45), 0 0 44px rgba(34,211,238,0.30); }
+  .hero .lede { font-size: clamp(17px, 2.3vw, 21px); color: var(--muted); max-width: 560px; margin: 0 0 36px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+  .btn { display: inline-flex; align-items: center; gap: 9px; font-weight: 500; font-size: 15px; padding: 13px 22px; border-radius: 11px; transition: transform .14s, background .18s, border-color .18s, color .18s, filter .18s; }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: linear-gradient(100deg, var(--accent), #6aa0ff); color: #04060c; }
+  .btn-primary:hover { filter: brightness(1.07); }
+  .btn-ghost { border: 1px solid var(--line-strong); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--accent-2); color: var(--accent-2); }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* floating 3d node labels */
+  .label {
+    position: absolute; z-index: 1; top: 0; left: 0;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em;
+    color: var(--accent-ink); white-space: nowrap; pointer-events: none;
+    padding: 3px 8px; border: 1px solid var(--line); border-radius: 6px;
+    background: rgba(8,12,22,0.55); backdrop-filter: blur(3px);
+    opacity: 0; transition: opacity .4s; will-change: transform, opacity;
+  }
+  .label::before { content: ""; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-2); margin-right: 7px; vertical-align: middle; box-shadow: 0 0 8px var(--accent-2); }
+
+  .telemetry {
+    position: absolute; left: var(--pad); bottom: 26px; z-index: 2;
+    font-family: var(--mono); font-size: 11.5px; color: var(--faint); line-height: 1.85;
+  }
+  .telemetry b { color: var(--muted); font-weight: 500; }
+  @media (max-width: 720px) { .telemetry { display: none; } }
+
+  .hint { position: absolute; right: var(--pad); bottom: 26px; z-index: 2; font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+  @media (max-width: 720px) { .hint { display: none; } }
+
+  /* ---------------- about ---------------- */
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(32px, 6vw, 72px); align-items: start; }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-body p { color: var(--muted); font-size: 17.5px; margin: 0 0 18px; }
+  .about-body strong { color: var(--ink); font-weight: 600; }
+
+  .facts { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .fact { background: var(--bg-2); padding: 18px 20px; }
+  .fact .k { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); }
+  .fact .v { font-size: 15px; margin-top: 6px; }
+  .fact .v small { color: var(--muted); }
+
+  /* ---------------- skills ---------------- */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 760px) { .skills-grid { grid-template-columns: 1fr; } }
+  .skill {
+    border: 1px solid var(--line); border-radius: 16px; padding: 26px;
+    background: linear-gradient(180deg, var(--glass), transparent);
+    transition: border-color .25s, transform .25s, box-shadow .25s, background .25s;
+  }
+  .skill:hover {
+    border-color: rgba(34,211,238,0.35); transform: translateY(-4px);
+    box-shadow: 0 18px 50px -28px rgba(34,211,238,0.55);
+    background: linear-gradient(180deg, rgba(34,211,238,0.06), transparent);
+  }
+  .skill .icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 16px; color: var(--accent-2); border: 1px solid var(--line); background: rgba(34,211,238,0.06); transition: transform .25s, color .25s, border-color .25s, background .25s, box-shadow .25s; }
+  .skill:hover .icon { transform: translateY(-2px) scale(1.08); border-color: rgba(34,211,238,0.4); background: rgba(34,211,238,0.14); box-shadow: 0 0 20px rgba(34,211,238,0.4); }
+  @media (prefers-reduced-motion: reduce) { .skill:hover, .skill:hover .icon { transform: none; } }
+  .skill .icon svg { width: 19px; height: 19px; }
+  .skill h3 { font-size: 18px; margin-bottom: 8px; }
+  .skill p { color: var(--muted); font-size: 15px; margin: 0 0 16px; }
+  .stack { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); background: rgba(77,141,255,0.10); border: 1px solid rgba(77,141,255,0.18); padding: 4px 9px; border-radius: 6px; }
+
+  /* ---------------- experience timeline ---------------- */
+  .timeline { position: relative; margin-left: 6px; }
+  .timeline::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: var(--line); }
+  .tl-item { position: relative; padding: 0 0 40px 40px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before { content: ""; position: absolute; left: 0; top: 6px; width: 13px; height: 13px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); box-shadow: 0 0 0 4px rgba(77,141,255,0.10); }
+  .tl-item.now::before { background: var(--online); border-color: var(--online); animation: radar 2.2s ease-out infinite; }
+  @keyframes radar {
+    0%   { box-shadow: 0 0 0 3px rgba(52,211,153,0.18), 0 0 0 0 rgba(52,211,153,0.55); }
+    70%  { box-shadow: 0 0 0 3px rgba(52,211,153,0.18), 0 0 0 14px rgba(52,211,153,0); }
+    100% { box-shadow: 0 0 0 3px rgba(52,211,153,0.18), 0 0 0 0 rgba(52,211,153,0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .tl-item.now::before { animation: none; box-shadow: 0 0 0 4px rgba(52,211,153,0.14); } }
+  .tl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 16px; flex-wrap: wrap; }
+  .tl-when { font-family: var(--mono); font-size: 12.5px; color: var(--accent-2); white-space: nowrap; }
+  .tl-role { font-family: var(--display); font-weight: 600; font-size: 19px; }
+  .tl-org { color: var(--muted); font-size: 14.5px; margin-top: 2px; }
+  .tl-item ul { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
+  .tl-item ul li { margin-bottom: 7px; }
+
+  /* ---------------- projects ---------------- */
+  .proj {
+    border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    background: linear-gradient(180deg, var(--glass), transparent);
+  }
+  .proj-top { padding: clamp(26px, 4vw, 40px); }
+  .proj .meta { font-family: var(--mono); font-size: 12px; color: var(--faint); display: flex; align-items: center; gap: 9px; margin-bottom: 18px; }
+  .proj .meta .d { width: 7px; height: 7px; border-radius: 50%; background: var(--online); }
+  .proj h3 { font-size: clamp(22px, 3vw, 28px); margin-bottom: 14px; }
+  .proj p { color: var(--muted); font-size: 16px; max-width: 720px; margin: 0 0 16px; }
+  .proj ul { color: var(--muted); font-size: 15px; margin: 0 0 22px; padding-left: 18px; }
+  .proj ul li { margin-bottom: 7px; }
+  .proj ul code { font-family: var(--mono); font-size: 13px; color: var(--accent-ink); background: rgba(77,141,255,0.10); padding: 1px 6px; border-radius: 5px; }
+  .proj-foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 20px clamp(26px, 4vw, 40px); border-top: 1px solid var(--line); }
+
+  /* ---------------- certs ---------------- */
+  .certs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (max-width: 760px) { .certs { grid-template-columns: 1fr; } }
+  .cert { display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; background: var(--bg-2); }
+  .cert-main { display: flex; align-items: center; gap: 15px; min-width: 0; }
+  .badge { flex: 0 0 auto; width: 60px; height: 60px; display: grid; place-items: center; transition: transform .2s ease; }
+  .badge:hover { transform: scale(1.06); }
+  .badge img { width: 100%; height: 100%; object-fit: contain; display: block; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); }
+  .cert .name { font-weight: 500; }
+  .cert .issuer { font-family: var(--mono); font-size: 12px; color: var(--faint); margin-top: 3px; }
+  .cert .date { font-family: var(--mono); font-size: 12.5px; color: var(--accent-2); white-space: nowrap; }
+
+  /* ---------------- contact ---------------- */
+  .contact { text-align: center; }
+  .contact h2 { font-size: clamp(32px, 5.5vw, 54px); margin-bottom: 18px; }
+  .contact h2 .grad { background: linear-gradient(100deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .contact p { color: var(--muted); font-size: 18px; max-width: 500px; margin: 0 auto 36px; }
+  .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 13px; }
+  .contact-meta { margin-top: 30px; font-family: var(--mono); font-size: 13px; color: var(--faint); }
+
+  footer { border-top: 1px solid var(--line); padding-block: 30px; }
+  .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top"><span class="br">&lt;</span>JAM<span class="br">/&gt;</span></a>
+    <nav class="nav-links">
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#certs">Certs</a>
+      <a class="nav-cta" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero" id="hero">
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="hero-fade"></div>
+
+    <!-- 3D node labels (positions set by JS) -->
+    <div class="label" data-i="0">Microsoft Azure</div>
+    <div class="label" data-i="1">AWS Cloud</div>
+    <div class="label" data-i="2">Python</div>
+    <div class="label" data-i="3">PowerShell</div>
+    <div class="label" data-i="4">Active Directory</div>
+    <div class="label" data-i="5">Microsoft 365</div>
+
+    <div class="wrap hero-content">
+      <span class="pill"><span class="pulse"></span> Aspiring Cloud Engineer</span>
+      <h1>Joshua<br><span class="cyan">Martinez</span></h1>
+      <p class="lede">I'm an IT professional working my way into the cloud — supporting real systems day to day while sharpening my Azure skills.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#projects">
+          See my work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="hint" aria-hidden="true">drag to rotate &#8634;</div>
+  </section>
+
+  <!-- ============================ SKILLS ============================ -->
+  <section class="section" id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">skills</span>
+      </div>
+      <div class="skills-grid">
+
+        <div class="skill reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17h16M4 12h16M4 7h16"/></svg></div>
+          <h3>Networking</h3>
+          <p>Topology concepts, configuration principles, cabling, and the cybersecurity practices and protocols that secure it.</p>
+          <div class="stack"><span class="tag">Topology</span><span class="tag">Cabling</span><span class="tag">Protocols</span><span class="tag">Infra installs</span></div>
+        </div>
+
+        <div class="skill reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10a4 4 0 0 0-7.5-2A4.5 4.5 0 1 0 7 17h10a3.5 3.5 0 0 0 1-6.9z"/></svg></div>
+          <h3>Cloud Infrastructure</h3>
+          <p>Deploying and managing cloud infrastructure within the Azure environment, with AWS and Azure fundamentals certified.</p>
+          <div class="stack"><span class="tag">Microsoft Azure</span><span class="tag">AWS</span></div>
+        </div>
+
+        <div class="skill reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13 5l-2 14"/></svg></div>
+          <h3>Automation &amp; Scripting</h3>
+          <p>Producing automation scripts with Python and PowerShell to cut configuration time and reduce human error.</p>
+          <div class="stack"><span class="tag">PowerShell</span><span class="tag">Python</span><span class="tag">Microsoft Graph</span></div>
+        </div>
+
+        <div class="skill reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.4 7.6 8 10 4.6-2.4 8-5 8-10V6z"/></svg></div>
+          <h3>Identity &amp; Systems</h3>
+          <p>Active Directory administration — account creation, password resets, and user management — plus end-user support at scale.</p>
+          <div class="stack"><span class="tag">Active Directory</span><span class="tag">Entra ID</span><span class="tag">Help desk</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ EXPERIENCE ============================ -->
+  <section class="section" id="experience">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">experience</span>
+      </div>
+      <div class="timeline">
+
+        <div class="tl-item now reveal">
+          <div class="tl-head">
+            <div class="tl-role">Microcomputer Specialist</div>
+            <div class="tl-when">Jan 2025 — Present</div>
+          </div>
+          <div class="tl-org">Nueces County Sheriff's Office · Corpus Christi, TX</div>
+          <ul>
+            <li>Resolve troubleshooting tickets using government-provided systems, software, and tools, reducing the support queue and ticket traffic.</li>
+            <li>Applied networking knowledge to install new physical network infrastructure onto the existing network.</li>
+          </ul>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-head">
+            <div class="tl-role">PC / Help Desk Technician</div>
+            <div class="tl-when">Mar 2024 — Jan 2025</div>
+          </div>
+          <div class="tl-org">Bay Ltd. · Corpus Christi, TX</div>
+          <ul>
+            <li>Introduced PowerShell automation into daily configuration work, cutting setup time and the likelihood of human error to improve IT workflow efficiency.</li>
+            <li>Collaborated with a small team to troubleshoot tickets submitted by internal employees.</li>
+          </ul>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-head">
+            <div class="tl-role">Epic Technical Dress Rehearsal Technician</div>
+            <div class="tl-when">Oct 2023 — Dec 2023</div>
+          </div>
+          <div class="tl-org">Optimum Healthcare IT · Corpus Christi, TX</div>
+          <ul>
+            <li>Reduced compatibility risks through rigorous software-to-hardware testing on healthcare end-user workstations.</li>
+            <li>Helped the team reach a 98%+ completion rate across a combined 50,000 user workstations and devices.</li>
+          </ul>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-head">
+            <div class="tl-role">IT Internship</div>
+            <div class="tl-when">Sep 2023 — Oct 2023</div>
+          </div>
+          <div class="tl-org">Nueces County Courthouse · Corpus Christi, TX</div>
+          <ul>
+            <li>Assisted County IT staff with tasks such as imaging computers and testing equipment to improve employee workflow efficiency.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PROJECTS ============================ -->
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">projects</span>
+      </div>
+
+      <div class="proj reveal">
+        <div class="proj-top">
+          <div class="meta"><span class="d"></span> powershell · microsoft 365 · automation</div>
+          <h3>Microsoft 365 User Offboarding Automation</h3>
+          <p>
+            Planned, designed, and built a PowerShell program to replace the slow,
+            manual process of offboarding employees — turning a repetitive business
+            practice into a single, repeatable script.
+          </p>
+          <ul>
+            <li>Built on the <code>Microsoft.Graph</code> and <code>ExchangeOnlineManagement</code> modules, using the appropriate cmdlets and functions.</li>
+            <li>Locates and lists users within an OU who may have active inbox rules.</li>
+            <li>Revokes a user's current logged-in sessions and returns a list of their active Microsoft licenses.</li>
+            <li>Every line is documented so the next person can understand and reuse the script.</li>
+          </ul>
+        </div>
+        <div class="proj-foot">
+          <a class="btn btn-ghost" href="https://github.com/JAMCloud01/PowerShell/tree/main" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.6.3-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.3 10.3 0 0 0 22 12.3C22 6.6 17.5 2 12 2z"/></svg>
+            View on GitHub
+          </a>
+          <span style="font-family:var(--mono); font-size:12px; color:var(--faint)">github.com/JAMCloud01/PowerShell</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CERTS ============================ -->
+  <section class="section" id="certs">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">certifications</span>
+      </div>
+      <div class="certs">
+        <div class="cert reveal">
+          <div class="cert-main">
+            <a class="badge" href="https://www.credly.com/badges/50b15530-7c25-4dde-81d4-49b658973cd4" target="_blank" rel="noopener" title="Verify on Credly">
+              <img src="https://images.credly.com/images/8090280a-311f-425f-a1cd-a32770b5a444/CompTIA_CSIS.png" alt="CompTIA Secure Infrastructure Specialist (CSIS) badge" loading="lazy" />
+            </a>
+            <div><div class="name">CompTIA Secure Infrastructure Specialist (CSIS)</div><div class="issuer">A+ · Network+ · Security+ · CompTIA</div></div>
+          </div>
+          <div class="date">Jul 2023</div>
+        </div>
+        <div class="cert reveal">
+          <div class="cert-main">
+            <a class="badge" href="https://www.credly.com/earner/earned/badge/a96d83c4-e8de-46c7-abbf-8c857556fdd1" target="_blank" rel="noopener" title="Verify on Credly">
+              <img src="https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" alt="AWS Certified Cloud Practitioner badge" loading="lazy" />
+            </a>
+            <div><div class="name">AWS Certified Cloud Practitioner</div><div class="issuer">Amazon Web Services</div></div>
+          </div>
+          <div class="date">Jul 2023</div>
+        </div>
+        <div class="cert reveal">
+          <div class="cert-main">
+            <a class="badge" href="https://www.credly.com/badges/0ec7906c-e7b7-4e4a-a63e-1f60f0ce9aaf" target="_blank" rel="noopener" title="Verify on Credly">
+              <img src="https://images.credly.com/images/b2e3c623-cc4a-4f0c-8a3b-aa6231e138fe/blob" alt="CompTIA Cloud+ badge" loading="lazy" />
+            </a>
+            <div><div class="name">CompTIA Cloud+ (C.E.)</div><div class="issuer">CompTIA</div></div>
+          </div>
+          <div class="date">Jan 2024</div>
+        </div>
+        <div class="cert reveal">
+          <div><div class="name">Microsoft Azure Fundamentals (AZ-900)</div><div class="issuer">Microsoft</div></div>
+          <div class="date">Apr 2024</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CONTACT ============================ -->
+  <section class="section contact" id="contact">
+    <div class="wrap reveal">
+      <span class="eyebrow" style="justify-content:center">contact</span>
+      <h2>Let's <span class="grad">connect</span>.</h2>
+      <p>Open to entry-level and associate cloud, network, and systems roles. Email is the fastest way to reach me.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:Jamartin.bus@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://github.com/JAMCloud01" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="tel:+13615634133">Call</a>
+      </div>
+      <div class="contact-meta">Jamartin.bus@gmail.com · 361.563.4133 · Corpus Christi, TX</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>&copy; <span id="year"></span> Joshua A. Martinez</span>
+    <span>node://corpus-christi · status: online</span>
+  </div>
+</footer>
+
+<!-- Three.js from cdnjs (allowed CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- scroll reveal ---------- */
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    }
+  })();
+
+  /* ---------- 3D network topology hero ---------- */
+  (function () {
+    var canvas = document.getElementById('scene');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var renderTag = document.getElementById('t-render');
+
+    if (typeof THREE === 'undefined') { if (renderTag) renderTag.textContent = 'css-fallback'; return; }
+
+    var renderer, scene, camera, points, lines, raf;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    } catch (err) { if (renderTag) renderTag.textContent = 'css-fallback'; return; }
+
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    renderer.setPixelRatio(DPR);
+
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x06080F, 0.052);
+
+    camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100);
+
+    var COUNT = 92;
+    var RX = 11, RY = 6.2, RZ = 7;
+    var LINK_DIST = 3.15;
+
+    var anchors = [
+      [-6.4,  2.6, -1.0],
+      [ 6.2,  2.2, -1.5],
+      [-5.0, -2.8,  1.2],
+      [ 5.4, -2.6,  0.8],
+      [-0.4,  3.4,  2.0],
+      [ 0.6, -3.6, -1.4]
+    ];
+
+    var base = new Float32Array(COUNT * 3);
+    var phase = new Float32Array(COUNT);
+    var i, j;
+    for (i = 0; i < COUNT; i++) {
+      var x, y, z;
+      if (i < anchors.length) { x = anchors[i][0]; y = anchors[i][1]; z = anchors[i][2]; }
+      else {
+        x = (Math.random() * 2 - 1) * RX;
+        y = (Math.random() * 2 - 1) * RY;
+        z = (Math.random() * 2 - 1) * RZ;
+      }
+      base[i*3] = x; base[i*3+1] = y; base[i*3+2] = z;
+      phase[i] = Math.random() * Math.PI * 2;
+    }
+
+    function makeSprite() {
+      var c = document.createElement('canvas'); c.width = c.height = 64;
+      var g = c.getContext('2d');
+      var grd = g.createRadialGradient(32,32,0,32,32,32);
+      grd.addColorStop(0, 'rgba(255,255,255,1)');
+      grd.addColorStop(0.25, 'rgba(180,230,255,0.9)');
+      grd.addColorStop(1, 'rgba(120,180,255,0)');
+      g.fillStyle = grd; g.beginPath(); g.arc(32,32,32,0,Math.PI*2); g.fill();
+      var t = new THREE.Texture(c); t.needsUpdate = true; return t;
+    }
+
+    var pGeo = new THREE.BufferGeometry();
+    var pPos = new Float32Array(COUNT * 3);
+    var pCol = new Float32Array(COUNT * 3);
+    var cyan = new THREE.Color(0x22D3EE), blue = new THREE.Color(0x4D8DFF);
+    for (i = 0; i < COUNT; i++) {
+      var mix = (base[i*3+2] + RZ) / (2 * RZ);
+      var col = cyan.clone().lerp(blue, mix);
+      pCol[i*3] = col.r; pCol[i*3+1] = col.g; pCol[i*3+2] = col.b;
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
+    var pMat = new THREE.PointsMaterial({
+      size: 0.42, map: makeSprite(), vertexColors: true,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
+    });
+    points = new THREE.Points(pGeo, pMat);
+    scene.add(points);
+
+    var edges = [];
+    for (i = 0; i < COUNT; i++) {
+      for (j = i + 1; j < COUNT; j++) {
+        var dx = base[i*3]-base[j*3], dy = base[i*3+1]-base[j*3+1], dz = base[i*3+2]-base[j*3+2];
+        if (Math.sqrt(dx*dx+dy*dy+dz*dz) < LINK_DIST) edges.push(i, j);
+      }
+    }
+    var lPos = new Float32Array(edges.length * 3);
+    var lGeo = new THREE.BufferGeometry();
+    lGeo.setAttribute('position', new THREE.BufferAttribute(lPos, 3));
+    var lMat = new THREE.LineBasicMaterial({ color: 0x3a6fd8, transparent: true, opacity: 0.16 });
+    lines = new THREE.LineSegments(lGeo, lMat);
+    scene.add(lines);
+
+    var labelEls = Array.prototype.slice.call(document.querySelectorAll('.label'));
+    var proj = new THREE.Vector3();
+
+
+    var theta = 0.3, phiAng = 0.05, radius = 17;
+    var targetTheta = theta, targetPhi = phiAng;
+    var dragging = false, lastX = 0, lastY = 0;
+    var px = 0, py = 0;
+
+    function setCamera() {
+      var ph = Math.max(-1.0, Math.min(1.0, phiAng));
+      camera.position.x = radius * Math.cos(ph) * Math.sin(theta) + px;
+      camera.position.y = radius * Math.sin(ph) + py;
+      camera.position.z = radius * Math.cos(ph) * Math.cos(theta);
+      camera.lookAt(0, 0, 0);
+    }
+
+    function resize() {
+      var w = canvas.clientWidth || window.innerWidth;
+      var h = canvas.clientHeight || window.innerHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', resize);
+
+    var hero = document.getElementById('hero');
+    hero.addEventListener('pointerdown', function (e) { dragging = true; lastX = e.clientX; lastY = e.clientY; });
+    window.addEventListener('pointerup', function () { dragging = false; });
+    window.addEventListener('pointermove', function (e) {
+      var w = window.innerWidth, h = window.innerHeight;
+      px = (e.clientX / w - 0.5) * 1.4;
+      py = -(e.clientY / h - 0.5) * 1.0;
+      if (dragging) {
+        targetTheta -= (e.clientX - lastX) * 0.005;
+        targetPhi   += (e.clientY - lastY) * 0.004;
+        targetPhi = Math.max(-0.9, Math.min(0.9, targetPhi));
+        lastX = e.clientX; lastY = e.clientY;
+      }
+    });
+
+    var t0 = performance.now();
+    function frame(now) {
+      var t = (now - t0) / 1000;
+
+      if (!dragging && !reduce) targetTheta += 0.0012;
+      theta += (targetTheta - theta) * 0.06;
+      phiAng += (targetPhi - phiAng) * 0.06;
+      setCamera();
+
+      for (i = 0; i < COUNT; i++) {
+        var fy = reduce ? 0 : Math.sin(t * 0.6 + phase[i]) * 0.18;
+        var fx = reduce ? 0 : Math.cos(t * 0.5 + phase[i]) * 0.12;
+        pPos[i*3]   = base[i*3]   + fx;
+        pPos[i*3+1] = base[i*3+1] + fy;
+        pPos[i*3+2] = base[i*3+2];
+      }
+      pGeo.attributes.position.needsUpdate = true;
+
+      for (var k = 0; k < edges.length; k += 2) {
+        var a = edges[k], b = edges[k+1];
+        lPos[k*3]   = pPos[a*3];   lPos[k*3+1] = pPos[a*3+1]; lPos[k*3+2] = pPos[a*3+2];
+        lPos[k*3+3] = pPos[b*3];   lPos[k*3+4] = pPos[b*3+1]; lPos[k*3+5] = pPos[b*3+2];
+      }
+      lGeo.attributes.position.needsUpdate = true;
+
+      for (var L = 0; L < labelEls.length; L++) {
+        var idx = +labelEls[L].getAttribute('data-i');
+        proj.set(pPos[idx*3], pPos[idx*3+1], pPos[idx*3+2]).project(camera);
+        if (proj.z > 1 || proj.z < -1) { labelEls[L].style.opacity = 0; continue; }
+        var sx = (proj.x * 0.5 + 0.5) * window.innerWidth;
+        var sy = (-proj.y * 0.5 + 0.5) * window.innerHeight;
+        labelEls[L].style.transform = 'translate(-50%,-50%) translate(' + sx + 'px,' + sy + 'px)';
+        labelEls[L].style.opacity = 0.92;
+      }
+
+      renderer.render(scene, camera);
+      if (!reduce) raf = requestAnimationFrame(frame);
+    }
+
+    resize();
+    setCamera();
+    if (reduce) { frame(performance.now()); }
+    else { raf = requestAnimationFrame(frame); }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { if (raf) cancelAnimationFrame(raf); }
+      else if (!reduce) { t0 = performance.now(); raf = requestAnimationFrame(frame); }
+    });
+  })();
+</script>
+</body>
+</html>
