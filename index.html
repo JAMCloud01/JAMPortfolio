@@ -234,6 +234,21 @@
   .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 13px; }
   .contact-meta { margin-top: 30px; font-family: var(--mono); font-size: 13px; color: var(--faint); }
 
+  /* button elements (toggle + submit) need resets so they match the anchor .btn */
+  button.btn { -webkit-appearance: none; appearance: none; border: none; background: transparent; font-family: var(--body); cursor: pointer; }
+  button.btn-primary { background: linear-gradient(100deg, var(--accent), #6aa0ff); }
+  button.btn-ghost { border: 1px solid var(--line-strong); }
+
+  /* contact message form */
+  .msg-form { max-width: 460px; margin: 28px auto 0; text-align: left; display: none; }
+  .msg-form.open { display: block; }
+  .msg-form .row { margin-bottom: 12px; }
+  .msg-form label { display: block; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin-bottom: 6px; }
+  .msg-form input, .msg-form textarea { width: 100%; background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: 10px; padding: 11px 13px; color: var(--ink); font-family: var(--body); font-size: 15px; }
+  .msg-form textarea { min-height: 110px; resize: vertical; }
+  .msg-form input:focus, .msg-form textarea:focus { outline: none; border-color: var(--accent-2); }
+  .msg-form button.btn { width: 100%; justify-content: center; margin-top: 4px; }
+
   footer { border-top: 1px solid var(--line); padding-block: 30px; }
   .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
 
@@ -469,6 +484,27 @@
       <span class="eyebrow" style="justify-content:center">contact</span>
       <h2>Let's <span class="grad">connect</span>.</h2>
       <p>Open to entry-level and associate cloud, and system roles. Email is the fastest way to reach out to me.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:Jamartin.bus@gmail.com">Email</a>
+        <a class="btn btn-ghost" href="https://github.com/JAMCloud01" target="_blank" rel="noopener">GitHub</a>
+        <button class="btn btn-ghost" id="msgToggle" type="button">Message</button>
+      </div>
+
+      <form class="msg-form" id="msgForm" action="https://formspree.io/f/mnjyrvrk" method="POST">
+        <div class="row">
+          <label for="m-name">Name</label>
+          <input id="m-name" type="text" name="name" required />
+        </div>
+        <div class="row">
+          <label for="m-email">Your email</label>
+          <input id="m-email" type="email" name="email" required />
+        </div>
+        <div class="row">
+          <label for="m-msg">Message</label>
+          <textarea id="m-msg" name="message" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Send message</button>
+      </form>
     </div>
   </section>
 
@@ -483,6 +519,19 @@
 
 <!-- Three.js from cdnjs (allowed CDN) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // toggle the contact message form open/closed
+  (function () {
+    var toggle = document.getElementById('msgToggle');
+    var form = document.getElementById('msgForm');
+    if (toggle && form) {
+      toggle.addEventListener('click', function () {
+        var open = form.classList.toggle('open');
+        if (open) document.getElementById('m-name').focus();
+      });
+    }
+  })();
+</script>
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
