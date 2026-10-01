@@ -1,0 +1,26 @@
+import configparser
+from netmiko import ConnectHandler
+
+config = configparser.ConfigParser()
+
+#Adds switch information to ini
+config.add_section('Switch')
+config.set('Switch', 'User_Network', '10.10.1.24')
+config.set('Switch', 'ACCT_Network', '10.10.1.23')
+config.set('Switch', 'MGMT_Network', '10.10.1.22')
+config.set('Switch', 'IT_Network', '10.10.1.21')
+
+
+User_Network_Switch = {
+    'device_type': 'extreme_exos',
+    'host': '10.10.1.23',
+    'username': 'admin',
+    'password': ''
+}
+
+connection = ConnectHandler(**User_Network_Switch)
+output = connection.send_command('show switch')
+print(output)
+
+with open('inventory.ini', 'w') as f:
+    config.write(f)

@@ -1,0 +1,9 @@
+---
+- name: Add a user on switch
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Create user account on switch
+      community.network.exos_config:
+        lines:
+          - "create account admin Local_Admin WGU123"

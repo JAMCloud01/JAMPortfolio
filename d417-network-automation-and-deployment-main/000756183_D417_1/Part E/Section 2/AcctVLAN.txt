@@ -1,0 +1,14 @@
+from netmiko import ConnectHandler
+
+device = {
+
+    'device_type': 'extreme_exos',
+    'host': '10.10.1.23',
+    'username': 'admin',
+    'password': '',
+    'port': '22'
+}
+
+connection = ConnectHandler(**device)
+output = connection.send_command('show vlan')
+print(output)

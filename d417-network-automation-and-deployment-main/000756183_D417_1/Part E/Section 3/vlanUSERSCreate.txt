@@ -1,0 +1,19 @@
+from netmiko import ConnectHandler
+
+device = {
+
+    'device_type': 'extreme_exos',
+    'host': '10.10.1.24',
+    'username': 'admin',
+    'password': '',
+    'port': '22'
+}
+
+connection = ConnectHandler(**device)
+
+commands = ['create vlan USER_Network tag 100', 'show vlan']
+
+for command in commands:
+    output = connection.send_command(command)
+
+print(output)
